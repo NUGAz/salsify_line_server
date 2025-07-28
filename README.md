@@ -26,6 +26,8 @@ The server's configuration is managed in a single **`.env`** file. This contains
 
 ### 2. Build the Docker Image
 
+./build.sh
+
 This command reads the `Dockerfile` and builds the application image. It only needs to be run once or after you change the source code or dependencies.
 
 ### 3. Run the Server
