@@ -26,7 +26,7 @@ app = FastAPI(
 # Use a startup event to run the async initialization.
 @app.on_event("startup")
 async def startup_event():
-    """Initializes the line indexer when the application starts."""
+    """Initializes line indexer when the application starts."""
     await indexer.initialize()
 
 
@@ -40,7 +40,8 @@ async def startup_event():
 )
 
 async def serve_line(line_index: int, response: Response):
-    """The API endpoint, now asynchronous."""
+    """API endpoint."""
+
     line = await indexer.get_line(line_index)
     if line is None:
         response.status_code = status.HTTP_413_REQUEST_ENTITY_TOO_LARGE

@@ -13,11 +13,16 @@ if [ -z "$1" ]; then
 fi
 
 export SOURCE_FILE=$1
-export CACHE_FILE=${SOURCE_FILE}.index
 
+CACHE_DIR=".cache"
+# Create the cache directory if it doesn't exist
+mkdir -p "$CACHE_DIR"
+# Create a unique cache file name based on the source file's base name
+BASENAME=$(basename "$SOURCE_FILE")
+
+export CACHE_FILE="${CACHE_DIR}/${BASENAME}.index"
 touch "$CACHE_FILE"
 
-# --- New Step: Pre-build the index ---
 echo "--- Checking/Building Index Cache ---"
 python3 build_cache.py "$SOURCE_FILE" "$CACHE_FILE"
 echo "--- Cache Check Complete ---"
@@ -28,5 +33,5 @@ if ! sudo systemctl is-active --quiet docker; then
     sudo systemctl start docker
 fi
 
-echo "Starting server for file: $SOURCE_FILE..."
+echo "Starting server fower file: $SOURCE_FILE..."
 sudo -E docker compose up --build
