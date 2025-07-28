@@ -1,0 +1,19 @@
+services:
+  line-server:
+    build:
+      context: .
+      args:
+        - APP_PORT=${APP_PORT}
+        - NUM_OF_WORKERS=${NUM_OF_WORKERS}
+    container_name: line_server_app
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+    environment:
+      # Pass both the source file path and the cache file path to the container
+      - FILE_TO_SERVE=/data/source.txt
+      - CACHE_FILE_PATH=/data/source.txt.index
+    volumes:
+      # Mount the source and corresponding cache file 
+      - ./${SOURCE_FILE}:/data/source.txt:ro
+      - ./${CACHE_FILE}:/data/source.txt.index
+    stop_grace_period: 1s
